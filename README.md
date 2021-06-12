@@ -1,5 +1,3 @@
-**:warning: This project is now archived and no longer supported. Please contact me if you maintain a replacement and would like me to link to your repo.**
-
 # Docker Guacamole
 
 A Docker Container for [Apache Guacamole](https://guacamole.apache.org/), a client-less remote desktop gateway. It supports standard protocols like VNC, RDP, and SSH over HTML5.
@@ -16,18 +14,7 @@ This container runs the guacamole web client, the guacd server and a postgres da
 docker run \
   -p 8080:8080 \
   -v </path/to/config>:/config \
-  oznu/guacamole
-```
-
-## Raspberry Pi / ARMv6
-
-This image will also allow you to run [Apache Guacamole](https://guacamole.apache.org/) on a Raspberry Pi or other Docker-enabled ARMv5/6/7/8 devices by using the `armhf` tag.
-
-```shell
-docker run \
-  -p 8080:8080 \
-  -v </path/to/config>:/config \
-  oznu/guacamole:armhf
+  ghcr.io/wolskie/guacamole
 ```
 
 ## Parameters
@@ -49,7 +36,7 @@ docker run \
   -p 8080:8080 \
   -v </path/to/config>:/config \
   -e "EXTENSIONS=auth-ldap,auth-duo"
-  oznu/guacamole
+  ghcr.io/wolskie/guacamole
 ```
 
 Currently the available extensions are:
@@ -67,25 +54,6 @@ You should only enable the extensions you require, if an extensions is not confi
 ## Default User
 
 The default username is `guacadmin` with password `guacadmin`.
-
-## Windows-based Docker Hosts
-
-Mapped volumes behave differently when running Docker for Windows and you may encounter some issues with PostgreSQL file system permissions. To avoid these issues, and still retain your config between container upgrades and recreation, you can use the local volume driver, as shown in the `docker-compose.yml` example below. When using this setup be careful to gracefully stop the container or data may be lost.
-
-```yml
-version: "2"
-services:
-  guacamole:
-    image: oznu/guacamole
-    container_name: guacamole
-    volumes:
-      - postgres:/config
-    ports:
-      - 8080:8080
-volumes:
-  postgres:
-    driver: local
-```
 
 ## License
 
